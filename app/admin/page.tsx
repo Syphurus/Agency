@@ -54,14 +54,8 @@ const AdminPage = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: pwd }),
       });
-
-      // Log the raw response to check for HTML (error page)
       const textResponse = await res.text();
-      console.log(textResponse);
-
-      // If the response is JSON, parse it
       const data = JSON.parse(textResponse);
-
       if (res.ok && data.success) {
         setAuth(true);
       } else {
@@ -121,12 +115,12 @@ const AdminPage = () => {
 
   if (!auth) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
         <form
           onSubmit={handleLogin}
-          className="p-8 bg-white dark:bg-gray-900 rounded-lg shadow"
+          className="p-8 w-full max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg"
         >
-          <h2 className="mb-4 text-xl font-bold text-center text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-xl font-semibold text-center text-gray-800 dark:text-white">
             Admin Login
           </h2>
           <input
@@ -134,11 +128,11 @@ const AdminPage = () => {
             placeholder="Password"
             value={pwd}
             onChange={(e) => setPwd(e.target.value)}
-            className="w-full mb-4 p-2 border rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+            className="w-full mb-4 p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
           />
           <button
             type="submit"
-            className="w-full p-2 bg-indigo-600 text-white rounded"
+            className="w-full p-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded"
           >
             Enter
           </button>
@@ -148,247 +142,183 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="p-8 bg-gray-50 dark:bg-gray-900 min-h-screen text-gray-900 dark:text-white">
-      <h1 className="mb-6 text-3xl font-bold text-center">Admin Dashboard</h1>
+    <div className="p-6 sm:p-8 bg-gray-100 dark:bg-gray-900 min-h-screen text-gray-900 dark:text-white">
+      <h1 className="text-3xl font-bold text-center mb-10">Admin Dashboard</h1>
 
-      {/* LEADS */}
-      <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">Leads</h2>
-        {leads.length === 0 ? (
-          <p>No leads yet.</p>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {leads.map((l) =>
-              editingLeadId === l.id ? (
-                <div
-                  key={l.id}
-                  className="p-4 bg-white dark:bg-gray-800 rounded shadow space-y-2"
-                >
-                  <input
-                    value={editingLead.name}
-                    onChange={(e) =>
-                      setEditingLead({ ...editingLead, name: e.target.value })
-                    }
-                    className="w-full p-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
-                  />
-                  <input
-                    value={editingLead.email}
-                    onChange={(e) =>
-                      setEditingLead({ ...editingLead, email: e.target.value })
-                    }
-                    className="w-full p-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
-                  />
-                  <input
-                    value={editingLead.subject || ""}
-                    onChange={(e) =>
-                      setEditingLead({
-                        ...editingLead,
-                        subject: e.target.value,
-                      })
-                    }
-                    className="w-full p-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
-                  />
-                  <textarea
-                    value={editingLead.message}
-                    onChange={(e) =>
-                      setEditingLead({
-                        ...editingLead,
-                        message: e.target.value,
-                      })
-                    }
-                    className="w-full p-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={updateLead}
-                      className="bg-green-600 text-white px-2 py-1 rounded"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => setEditingLeadId(null)}
-                      className="bg-gray-600 text-white px-2 py-1 rounded"
-                    >
-                      Cancel
-                    </button>
-                  </div>
+      {/* Leads Section */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Leads</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {leads.map((l) =>
+            editingLeadId === l.id ? (
+              <div
+                key={l.id}
+                className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow space-y-3"
+              >
+                <input
+                  value={editingLead.name}
+                  onChange={(e) =>
+                    setEditingLead({ ...editingLead, name: e.target.value })
+                  }
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                />
+                <input
+                  value={editingLead.email}
+                  onChange={(e) =>
+                    setEditingLead({ ...editingLead, email: e.target.value })
+                  }
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                />
+                <input
+                  value={editingLead.subject || ""}
+                  onChange={(e) =>
+                    setEditingLead({ ...editingLead, subject: e.target.value })
+                  }
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                />
+                <textarea
+                  value={editingLead.message}
+                  onChange={(e) =>
+                    setEditingLead({ ...editingLead, message: e.target.value })
+                  }
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                />
+                <div className="flex gap-3">
+                  <button
+                    onClick={updateLead}
+                    className="px-3 py-1 bg-green-600 text-white rounded"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setEditingLeadId(null)}
+                    className="px-3 py-1 bg-gray-600 text-white rounded"
+                  >
+                    Cancel
+                  </button>
                 </div>
-              ) : (
-                <div
-                  key={l.id}
-                  className="p-4 bg-white dark:bg-gray-800 rounded shadow"
-                >
-                  <p>
-                    <strong>{l.name}</strong> ({l.email})
-                  </p>
-                  {l.subject && <p>Subject: {l.subject}</p>}
-                  <p>{l.message}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {new Date(l.createdAt).toLocaleString()}
-                  </p>
-                  <div className="mt-2 flex gap-2">
-                    <button
-                      onClick={() => {
-                        setEditingLeadId(l.id);
-                        setEditingLead(l);
-                      }}
-                      className="text-blue-600"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteItem("leads", l.id)}
-                      className="text-red-600"
-                    >
-                      Delete
-                    </button>
-                  </div>
+              </div>
+            ) : (
+              <div
+                key={l.id}
+                className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow space-y-2"
+              >
+                <p className="font-semibold">
+                  {l.name}{" "}
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    ({l.email})
+                  </span>
+                </p>
+                {l.subject && (
+                  <p className="text-sm font-medium">Subject: {l.subject}</p>
+                )}
+                <p>{l.message}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {new Date(l.createdAt).toLocaleString()}
+                </p>
+                <div className="flex gap-4 mt-2">
+                  <button
+                    onClick={() => {
+                      setEditingLeadId(l.id);
+                      setEditingLead(l);
+                    }}
+                    className="text-blue-600 dark:text-blue-400"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteItem("leads", l.id)}
+                    className="text-red-600 dark:text-red-400"
+                  >
+                    Delete
+                  </button>
                 </div>
-              )
-            )}
-          </div>
-        )}
+              </div>
+            )
+          )}
+        </div>
       </section>
 
-      {/* REVIEWS */}
-      <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">Reviews</h2>
-        {reviews.length === 0 ? (
-          <p>No reviews yet.</p>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {reviews.map((r) =>
-              editingReviewId === r.id ? (
-                <div
-                  key={r.id}
-                  className="p-4 bg-white dark:bg-gray-800 rounded shadow space-y-2"
-                >
-                  <input
-                    value={editingReview.name}
-                    onChange={(e) =>
-                      setEditingReview({
-                        ...editingReview,
-                        name: e.target.value,
-                      })
-                    }
-                    className="w-full p-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
-                  />
-                  <input
-                    value={editingReview.role}
-                    onChange={(e) =>
-                      setEditingReview({
-                        ...editingReview,
-                        role: e.target.value,
-                      })
-                    }
-                    className="w-full p-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
-                  />
-                  <textarea
-                    value={editingReview.text}
-                    onChange={(e) =>
-                      setEditingReview({
-                        ...editingReview,
-                        text: e.target.value,
-                      })
-                    }
-                    className="w-full p-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white"
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={updateReview}
-                      className="bg-green-600 text-white px-2 py-1 rounded"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => setEditingReviewId(null)}
-                      className="bg-gray-600 text-white px-2 py-1 rounded"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  key={r.id}
-                  className="p-4 bg-white dark:bg-gray-800 rounded shadow"
-                >
-                  <p className="font-semibold">{r.name}</p>
-                  <p className="italic text-indigo-600 dark:text-indigo-400">
-                    {r.role}
-                  </p>
-                  <p>{r.text}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {new Date(r.createdAt).toLocaleString()}
-                  </p>
-                  <div className="mt-2 flex gap-2">
-                    <button
-                      onClick={() => {
-                        setEditingReviewId(r.id);
-                        setEditingReview(r);
-                      }}
-                      className="text-blue-600"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteItem("reviews", r.id)}
-                      className="text-red-600"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              )
-            )}
-          </div>
-        )}
-      </section>
-
-      {/* ADD REVIEW */}
+      {/* Reviews Section */}
       <section>
-        <h2 className="mb-4 text-2xl font-semibold">Add Review</h2>
-        <form onSubmit={submitReview} className="space-y-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={newReview.name}
-            onChange={(e) =>
-              setNewReview((prev) => ({ ...prev, name: e.target.value }))
-            }
-            className="w-full p-2 border rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            required
-          />
-          <input
-            type="text"
-            name="role"
-            placeholder="Role"
-            value={newReview.role}
-            onChange={(e) =>
-              setNewReview((prev) => ({ ...prev, role: e.target.value }))
-            }
-            className="w-full p-2 border rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            required
-          />
-          <textarea
-            name="text"
-            placeholder="Review"
-            value={newReview.text}
-            onChange={(e) =>
-              setNewReview((prev) => ({ ...prev, text: e.target.value }))
-            }
-            className="w-full p-2 border rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            rows={4}
-            required
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-green-600 text-white rounded"
-          >
-            Submit
-          </button>
-        </form>
+        <h2 className="text-2xl font-semibold mb-4">Reviews</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {reviews.map((r) =>
+            editingReviewId === r.id ? (
+              <div
+                key={r.id}
+                className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow space-y-3"
+              >
+                <input
+                  value={editingReview.name}
+                  onChange={(e) =>
+                    setEditingReview({ ...editingReview, name: e.target.value })
+                  }
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                />
+                <input
+                  value={editingReview.role}
+                  onChange={(e) =>
+                    setEditingReview({ ...editingReview, role: e.target.value })
+                  }
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                />
+                <textarea
+                  value={editingReview.text}
+                  onChange={(e) =>
+                    setEditingReview({ ...editingReview, text: e.target.value })
+                  }
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                />
+                <div className="flex gap-3">
+                  <button
+                    onClick={updateReview}
+                    className="px-3 py-1 bg-green-600 text-white rounded"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setEditingReviewId(null)}
+                    className="px-3 py-1 bg-gray-600 text-white rounded"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div
+                key={r.id}
+                className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow space-y-2"
+              >
+                <p className="font-semibold">{r.name}</p>
+                <p className="italic text-indigo-600 dark:text-indigo-400">
+                  {r.role}
+                </p>
+                <p>{r.text}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {new Date(r.createdAt).toLocaleString()}
+                </p>
+                <div className="flex gap-4 mt-2">
+                  <button
+                    onClick={() => {
+                      setEditingReviewId(r.id);
+                      setEditingReview(r);
+                    }}
+                    className="text-blue-600 dark:text-blue-400"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteItem("reviews", r.id)}
+                    className="text-red-600 dark:text-red-400"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )
+          )}
+        </div>
       </section>
     </div>
   );
