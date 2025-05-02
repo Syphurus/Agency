@@ -1,26 +1,115 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(:not(.dark), :not(.dark) *));
+@custom-variant auto (&:where(:not(.dark), :not(.dark) *), &:where(.dark, .dark *));
+
+/* 2. Light-mode variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core backgrounds & text */
+  --bg: #ffffff; /* pure white */
+  --fg: #000000; /* pure black */
+
+  /* Shades for UI elements */
+  --shade-1: #f9fafb; /* gray-50 */
+  --shade-2: #e5e7eb; /* gray-200 */
+  --shade-3: #d1d5db; /* gray-300 */
+  --shade-4: #9ca3af; /* gray-400 */
+  --shade-5: #6b7280; /* gray-500 */
+  --shade-6: #4b5563; /* gray-600 */
+  --shade-7: #374151; /* gray-700 */
+  --shade-8: #1f2937; /* gray-800 */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 3. Dark-mode variables */
+.dark {
+  --bg: #000000; /* pure black */
+  --fg: #ffffff; /* pure white */
+
+  --shade-1: #1f2937; /* gray-800 */
+  --shade-2: #374151; /* gray-700 */
+  --shade-3: #4b5563; /* gray-600 */
+  --shade-4: #6b7280; /* gray-500 */
+  --shade-5: #9ca3af; /* gray-400 */
+  --shade-6: #d1d5db; /* gray-300 */
+  --shade-7: #e5e7eb; /* gray-200 */
+  --shade-8: #f9fafb; /* gray-50 */
 }
 
+/* 4. System-preference fallback */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not(.dark) {
+    --bg: #000000;
+    --fg: #ffffff;
+    --shade-1: #1f2937;
+    --shade-2: #374151;
+    --shade-3: #4b5563;
+    --shade-4: #6b7280;
+    --shade-5: #9ca3af;
+    --shade-6: #d1d5db;
+    --shade-7: #e5e7eb;
+    --shade-8: #f9fafb;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 5. Apply variables to core elements */
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    transition: background-color 0.3s, color 0.3s;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  a {
+    color: var(--shade-6);
+  }
+  a:hover {
+    color: var(--shade-8);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--fg);
+  }
+
+  button {
+    background-color: var(--shade-5);
+    color: var(--fg);
+    border: 1px solid var(--shade-3);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  button:hover {
+    background-color: var(--shade-6);
+    border-color: var(--shade-4);
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: var(--shade-1);
+    color: var(--fg);
+    border: 1px solid var(--shade-3);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--shade-7);
+    background-color: var(--shade-8);
+  }
 }
