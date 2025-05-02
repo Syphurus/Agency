@@ -153,7 +153,9 @@ const AdminPage = () => {
 
       {/* LEADS */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">Leads</h2>
+        <h2 className="mb-4 text-2xl font-semibold text-black dark:text-white">
+          Leads
+        </h2>
         {leads.length === 0 ? (
           <p>No leads yet.</p>
         ) : (
@@ -232,13 +234,13 @@ const AdminPage = () => {
                         setEditingLeadId(l.id);
                         setEditingLead(l);
                       }}
-                      className="text-blue-600"
+                      className="text-blue-600 bg-transparent"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => deleteItem("leads", l.id)}
-                      className="text-red-600"
+                      className="text-red-600 bg-transparent"
                     >
                       Delete
                     </button>
@@ -252,7 +254,9 @@ const AdminPage = () => {
 
       {/* REVIEWS */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">Reviews</h2>
+        <h2 className="mb-4 text-2xl font-semibold text-black dark:text-white">
+          Reviews
+        </h2>
         {reviews.length === 0 ? (
           <p>No reviews yet.</p>
         ) : (
@@ -327,13 +331,13 @@ const AdminPage = () => {
                         setEditingReviewId(r.id);
                         setEditingReview(r);
                       }}
-                      className="text-blue-600"
+                      className="text-blue-600 bg-transparent"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => deleteItem("reviews", r.id)}
-                      className="text-red-600"
+                      className="text-red-600 bg-transparent"
                     >
                       Delete
                     </button>
@@ -347,7 +351,9 @@ const AdminPage = () => {
 
       {/* ADD REVIEW */}
       <section>
-        <h2 className="mb-4 text-2xl font-semibold">Add Review</h2>
+        <h2 className="mb-4 text-2xl font-semibold text-black dark:text-white">
+          Add Review
+        </h2>
         <form onSubmit={submitReview} className="space-y-4">
           <input
             type="text"
