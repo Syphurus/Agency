@@ -30,16 +30,22 @@ const ReviewsPage = () => {
     const fetchReviews = async () => {
       try {
         const res = await fetch("/api/reviews");
-        if (!res.ok) {
-          throw new Error("Failed to fetch reviews");
-        }
         const data = await res.json();
+
+        if (!res.ok) {
+          // we got a 500 or 400 from the API
+          console.error("API error loading reviews:", data);
+          return;
+        }
+
+        if (!Array.isArray(data)) {
+          console.error("Expected an array but got:", data);
+          return;
+        }
+
         setReviewsData(data);
-      } catch (error) {
-        console.error("Failed to fetch reviews:", error);
-        setError("There was an error loading the reviews.");
-      } finally {
-        setLoading(false); // Stop loading
+      } catch (err) {
+        console.error("Network error loading reviews:", err);
       }
     };
 

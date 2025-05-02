@@ -8,7 +8,7 @@ export async function GET() {
     });
     return NextResponse.json(reviews);
   } catch (err) {
-    console.error("Error fetching reviews:", err);
+    console.error("Error fetching reviews:", (err as Error).message);
     return NextResponse.json(
       { error: "Failed to fetch reviews" },
       { status: 500 }
