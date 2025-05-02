@@ -2,15 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 // Update Lead
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const body = await req.json();
-  const { name, email, subject, message } = body;
+export async function PUT(req: NextRequest) {
+  const id = req.nextUrl.pathname.split("/").pop(); // Extract ID from URL
+  const { name, email, subject, message } = await req.json();
+
+  if (!id) {
+    return NextResponse.json({ error: "Missing ID" }, { status: 400 });
+  }
 
   const updated = await prisma.lead.update({
-    where: { id: params.id },
+    where: { id },
     data: { name, email, subject, message },
   });
 
@@ -18,12 +19,12 @@ export async function PUT(
 }
 
 // Delete Lead
-export async function DELETE(
-  _: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  // Convert 'id' from string to number
-  const id = params.id; // Keep 'id' as a string
+export async function DELETE(req: NextRequest) {
+  const id = req.nextUrl.pathname.split("/").pop(); // Extract ID from URL
+
+  if (!id) {
+    return NextResponse.json({ error: "Missing ID" }, { status: 400 });
+  }
 
   await prisma.lead.delete({ where: { id } });
   return NextResponse.json({ success: true });

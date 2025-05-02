@@ -1,31 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const body = await req.json();
-  const { name, role, text } = body;
+// Update review
+export async function PUT(req: NextRequest) {
+  try {
+    const id = parseInt(req.nextUrl.pathname.split("/").pop() || "", 10);
+    const { name, role, text } = await req.json();
 
-  // Convert 'id' to a number
-  const id = parseInt(params.id, 10);
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+    }
 
-  const updated = await prisma.review.update({
-    where: { id },
-    data: { name, role, text },
-  });
+    const updated = await prisma.review.update({
+      where: { id },
+      data: { name, role, text },
+    });
 
-  return NextResponse.json(updated);
+    return NextResponse.json(updated);
+  } catch (err) {
+    console.error("Error updating review:", err);
+    return NextResponse.json(
+      { error: "Failed to update review" },
+      { status: 500 }
+    );
+  }
 }
 
-export async function DELETE(
-  _: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  // Convert 'id' to a number
-  const id = parseInt(params.id, 10);
+// Delete review
+export async function DELETE(req: NextRequest) {
+  try {
+    const id = parseInt(req.nextUrl.pathname.split("/").pop() || "", 10);
 
-  await prisma.review.delete({ where: { id } });
-  return NextResponse.json({ success: true });
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+    }
+
+    await prisma.review.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("Error deleting review:", err);
+    return NextResponse.json(
+      { error: "Failed to delete review" },
+      { status: 500 }
+    );
+  }
 }
