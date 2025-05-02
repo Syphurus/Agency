@@ -27,10 +27,10 @@ const FooterSection = () => {
             Quick Links
           </h4>
           <ul className="space-y-2 font-sans text-sm">
-            {["Services", "Reviews", "Pricing", "Contact"].map((item) => (
+            {["Services", "Reviews", "Contact"].map((item) => (
               <li key={item}>
                 <Link
-                  href={`#${item.toLowerCase()}`}
+                  href={`/${item.toLowerCase()}`}
                   className="text-gray-900 hover:text-gray-400 dark:text-white transition-colors"
                 >
                   {item}
@@ -47,7 +47,6 @@ const FooterSection = () => {
           </h4>
           <ul className="space-y-2 font-sans text-sm">
             {[
-              { name: "Blog", href: "/blog" },
               { name: "FAQ", href: "/faq" },
               { name: "Privacy Policy", href: "/privacy" },
               { name: "Terms of Service", href: "/terms" },
