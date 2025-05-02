@@ -26,6 +26,9 @@ export async function POST(req: Request) {
       );
     }
 
+    const count = await prisma.review.count();
+    console.log("Supabase review count is:", count);
+
     const review = await prisma.review.create({
       data: { name, role, text },
     });
