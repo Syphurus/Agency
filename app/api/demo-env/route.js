@@ -1,16 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+// app/api/demo-env/route.js
+import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
-
-export async function GET(req, res) {
-  try {
-    // Trying to fetch reviews to check the DB connection
-    const reviews = await prisma.review.findMany();
-    return res.status(200).json(reviews);
-  } catch (error) {
-    console.error("Database connection error:", error);
-    return res
-      .status(500)
-      .json({ message: "Error fetching reviews: " + error.message });
-  }
+export async function GET() {
+  // WARNING: Do not leave this in production—it's purely for debugging!
+  return NextResponse.json({
+    DATABASE_URL: process.env.DATABASE_URL,
+  });
 }
