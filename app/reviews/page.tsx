@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
@@ -23,20 +21,45 @@ type Review = {
 
 const ReviewsPage = () => {
   const [reviewsData, setReviewsData] = useState<Review[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // Track loading state
+  const [error, setError] = useState<string | null>(null); // Track error state
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const res = await fetch("/api/reviews");
+        if (!res.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
         const data = await res.json();
         setReviewsData(data);
       } catch (error) {
         console.error("Failed to fetch reviews:", error);
+        setError("There was an error loading the reviews.");
+      } finally {
+        setLoading(false); // Stop loading
       }
     };
 
     fetchReviews();
   }, []);
+
+  // If the page is loading or there's an error
+  if (loading) {
+    return (
+      <main className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen flex justify-center items-center">
+        <p>Loading reviews...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen flex justify-center items-center">
+        <p>{error}</p>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen">
@@ -58,9 +81,9 @@ const ReviewsPage = () => {
       {/* Reviews Grid */}
       <section className="py-36 px-6">
         <div className="max-w-6xl mx-auto grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {reviewsData.map((review, idx) => (
+          {reviewsData.map((review) => (
             <motion.div
-              key={idx}
+              key={review.id}
               className="relative bg-gray-50 dark:bg-gray-900 p-8 rounded-3xl shadow-xl"
               initial="offscreen"
               whileInView="onscreen"
