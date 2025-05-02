@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const CTASection = () => {
   return (
@@ -19,10 +20,13 @@ const CTASection = () => {
           Join hundreds of brands who trust us to drive growth and transform
           their online presence.
         </p>
-        <button className="inline-flex items-center bg-white text-indigo-600 font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200">
+        <Link
+          href="/contact"
+          className="inline-flex items-center bg-white text-indigo-600 font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200"
+        >
           Get Started
           <ArrowRight className="ml-2 h-5 w-5" />
-        </button>
+        </Link>
       </motion.div>
     </section>
   );
