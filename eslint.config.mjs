@@ -16,7 +16,8 @@ const eslintConfig = [
       "@typescript-eslint/no-unused-expressions": "off", // Disable no-unused-expressions rule
       "@typescript-eslint/no-this-alias": "off", // Disable no-this-alias rule
       "no-unused-vars": "off", // Disable no-unused-vars rule
-      "no-console": "warn", // Optionally, change console error to warning
+      "no-console": "off", // Disable no-console rule
+      "@typescript-eslint/no-require-imports": "off", // Disable no-require-imports rule
     },
   },
 ];
