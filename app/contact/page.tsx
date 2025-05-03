@@ -82,7 +82,7 @@ const ContactPage = () => {
                 Our Office
               </h3>
               <p className="font-sans text-base text-gray-600 dark:text-gray-400">
-                Park Grandeura, BPTP, sector 82 Faridabad, Haryana 121002
+                Faridabad, Haryana 121002
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ const ContactPage = () => {
                 Email
               </h3>
               <p className="font-sans text-base text-gray-600 dark:text-gray-400">
-                hello@yoursaas.com
+                nuvanaworkspace@gmail.com
               </p>
             </div>
           </div>
