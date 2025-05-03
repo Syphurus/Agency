@@ -41,9 +41,12 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md shadow-md bg-white dark:bg-gray-900 transition-colors duration-300 rounded-b-2xl">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
-        <div className="text-2xl font-bold text-black dark:text-white">
-          YourAgency
-        </div>
+        <Link
+          href="/"
+          className="text-2xl font-bold text-black dark:text-white"
+        >
+          Nuvana
+        </Link>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center space-x-8">
@@ -104,25 +107,23 @@ export default function Navbar() {
             className="md:hidden overflow-hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300 rounded-b-2xl"
           >
             <div className="flex flex-col items-center space-y-4 py-4">
+              <Link
+                href="/"
+                onClick={() => setOpen(false)}
+                className="text-black dark:text-white text-lg hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
+              >
+                Home
+              </Link>
+              {["About", "Services", "Reviews", "Contact"].map((label) => (
                 <Link
-                    href="/"
-                    onClick={() => setOpen(false)}
-                    className="text-black dark:text-white text-lg hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
+                  key={label}
+                  href={`/${label.toLowerCase()}`}
+                  onClick={() => setOpen(false)}
+                  className="text-black dark:text-white text-lg hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
                 >
-                  Home
+                  {label}
                 </Link>
-              {["About", "Services", "Reviews", "Contact"].map(
-                (label) => (
-                  <Link
-                    key={label}
-                    href={`/${label.toLowerCase()}`}
-                    onClick={() => setOpen(false)}
-                    className="text-black dark:text-white text-lg hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
-                  >
-                    {label}
-                  </Link>
-                )
-              )}
+              ))}
             </div>
           </motion.div>
         )}

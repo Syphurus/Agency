@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Instagram, Twitter, Linkedin, Mail } from "lucide-react";
+import { Instagram, X, Linkedin, Mail, Twitter } from "lucide-react";
 
 const FooterSection = () => {
   const currentYear = new Date().getFullYear();
@@ -13,7 +13,7 @@ const FooterSection = () => {
         {/* Brand & Description */}
         <div>
           <h3 className="font-display text-2xl text-gray-900 dark:text-white mb-4">
-            Your SaaS
+            Nuvana
           </h3>
           <p className="font-sans text-sm">
             We empower brands with tailored digital marketing, social media
@@ -70,17 +70,13 @@ const FooterSection = () => {
           </h4>
           <div className="flex space-x-4 mb-4">
             <Link
-              href="https://instagram.com"
+              href="https://www.instagram.com/teamnuvana/"
               target="_blank"
               aria-label="Instagram"
             >
               <Instagram className="h-5 w-5 text-gray-900 hover:text-gray-400 dark:text-white transition-colors" />
             </Link>
-            <Link
-              href="https://twitter.com"
-              target="_blank"
-              aria-label="Twitter"
-            >
+            <Link href="https://x.com" target="_blank" aria-label="X">
               <Twitter className="h-5 w-5 text-gray-900 hover:text-gray-400 dark:text-white transition-colors" />
             </Link>
             <Link
@@ -97,14 +93,14 @@ const FooterSection = () => {
               href="mailto:info@yoursaas.com"
               className="text-gray-900 hover:text-gray-400 dark:text-white transition-colors"
             >
-              info@yoursaas.com
+              nuvanaworkspace@gmail.com
             </a>
           </div>
         </div>
       </div>
 
       <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6 text-center font-sans text-sm">
-        © {currentYear} Your SaaS. All rights reserved.
+        © {currentYear} Nuvana. All rights reserved.
       </div>
     </footer>
   );
